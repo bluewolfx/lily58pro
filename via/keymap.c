@@ -264,7 +264,15 @@ static void render_anim(void) {
         }
     }
 
+    static bool was_oled_off = false;
+    
     if (get_current_wpm() != 000) {
+        // Check if OLED was off and is now turning on
+        if (was_oled_off) {
+            anim_timer = timer_read32();
+            was_oled_off = false;
+        }
+        
         oled_on();
 
         if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
@@ -276,6 +284,7 @@ static void render_anim(void) {
     } else {
         if (timer_elapsed32(anim_sleep) > oled_timeout) {
             oled_off();
+            was_oled_off = true;
         } else {
             if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
                 anim_timer = timer_read32();
