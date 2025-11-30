@@ -38,22 +38,51 @@ See [lily58.layout.json](via/lily58.layout.json) for full VIA configuration.
 | Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
 |------+------+------+------+------+------|                    |------+------+------+------+------+------|
 |LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
-|------+------+------+------+------+------|   [   |    |    ]  |------+------+------+------+------+------|
+|------+------+------+------+------+------|  CAPS |    |  PLAY |------+------+------+------+------+------|
 |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
 `-----------------------------------------/       /     \      \-----------------------------------------'
                   | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
                   |      |      |      |/       /         \      \ |      |      |      |
                   `----------------------------'           '------''--------------------'
 ```
+Encoder keys: Caps Lock (left), Play/Pause (right)
 
 ### Layer 1: LOWER
-Function keys (F1-F12) and symbols
+```
+,-----------------------------------------.                    ,-----------------------------------------.
+|      |      |      |      |      |      |                    |      |      |      |      |      |      |
+|------+------+------+------+------+------|                    |------+------+------+------+------+------|
+|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
+|------+------+------+------+------+------|                    |------+------+------+------+------+------|
+|   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   ~  |
+|------+------+------+------+------+------|  PREV |    |  NEXT |------+------+------+------+------+------|
+|      |      |      |      |      |  DEL |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
+`-----------------------------------------/       /     \      \-----------------------------------------'
+                  | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+                  |      |      |      |/       /         \      \ |      |      |      |
+                  `----------------------------'           '------''--------------------'
+```
+Encoder keys: Previous Track (left), Next Track (right)
 
 ### Layer 2: RAISE
-Numbers and arrow keys
+```
+,-----------------------------------------.                    ,-----------------------------------------.
+|      |      |      |      |      |      |                    |      |      |      |      |      |      |
+|------+------+------+------+------+------|                    |------+------+------+------+------+------|
+|   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
+|------+------+------+------+------+------|                    |------+------+------+------+------+------|
+|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Up  |Right |      |
+|------+------+------+------+------+------|  MSTP |    |  MUTE |------+------+------+------+------+------|
+|  F7  |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
+`-----------------------------------------/       /     \      \-----------------------------------------'
+                  | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+                  |      |      |      |/       /         \      \ |      |      |      |
+                  `----------------------------'           '------''--------------------'
+```
+Encoder keys: Media Stop (left), Mute (right)
 
 ### Layer 3: ADJUST
-System controls and RGB (accessed by holding LOWER + RAISE)
+Reserved for future use (accessed by holding LOWER + RAISE)
 
 ## Hardware Configuration
 
@@ -95,9 +124,14 @@ System controls and RGB (accessed by holding LOWER + RAISE)
 ### November 30, 2025
 - Fixed bongocat flickering issue after idle timeout
 - Added timer reset when OLED wakes from sleep to prevent rapid frame cycling
+- Updated keymap to match VIA layout configuration
+  - Base layer: Added Caps Lock and Play/Pause encoder keys
+  - LOWER layer: Added Delete key, Previous/Next track encoder keys
+  - RAISE layer: Added Media Stop and Mute encoder keys
+- Updated layer 3 documentation to reflect disabled state (no RGB hardware)
 
 ---
 
-Last Updated: November 30, 2025 
+Last Updated: November 30, 2025
 QMK Version: 0.30.13
 
