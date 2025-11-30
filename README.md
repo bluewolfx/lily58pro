@@ -106,18 +106,18 @@ Reserved for future use (accessed by holding LOWER + RAISE)
 ### Firmware Size
 27,702 / 28,672 bytes (96%) - 970 bytes free
 
-## Credits
-
-- Bongocat Animation: [xxqxpxx/lily58_bongocat_mac](https://github.com/xxqxpxx/lily58_bongocat_mac)
-- QMK Firmware: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
-- Lily58: [kata0510/Lily58](https://github.com/kata0510/Lily58)
-
 ## Configuration Details
 
 - OLED timeout: 10 minutes
 - Master hand: LEFT
 - Encoder: Volume up/down on right half
 - WPM tracking updates bongocat animation speed
+
+## Credits
+
+- Bongocat Animation: [xxqxpxx/lily58_bongocat_mac](https://github.com/xxqxpxx/lily58_bongocat_mac)
+- QMK Firmware: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
+- Lily58: [kata0510/Lily58](https://github.com/kata0510/Lily58)
 
 ## Changelog
 
