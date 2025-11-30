@@ -40,6 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 17
 #define RGBLIGHT_VAL_STEP 17
 #define OLED_TIMEOUT 120000 // 2 minutes
+#define SPLIT_OLED_ENABLE
+#define OLED_UPDATE_INTERVAL 50
 
 // Underglow
 /*
