@@ -24,9 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define QUICK_TAP_TERM 0
 #define TAPPING_TERM 100
 #define SPLIT_USB_DETECT
+#define SPLIT_USB_TIMEOUT 2500
+#define SPLIT_USB_TIMEOUT_POLL 10
 #define SPLIT_WPM_ENABLE
 #define SPLIT_OLED_ENABLE
 #define OLED_TIMEOUT 120000
+#define USB_SUSPEND_WAKEUP_DELAY 200
 
 #define ENCODER_A_PINS { }
 #define ENCODER_B_PINS { }

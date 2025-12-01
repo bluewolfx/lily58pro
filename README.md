@@ -121,6 +121,25 @@ Reserved for future use (accessed by holding LOWER + RAISE)
 
 ## Changelog
 
+### December 1, 2025
+- **Fixed USB initialization issues on Windows boot**
+  - Added `SPLIT_USB_TIMEOUT 2500` for better split keyboard detection
+  - Added `SPLIT_USB_TIMEOUT_POLL 10` for faster polling
+  - Added `USB_SUSPEND_WAKEUP_DELAY 200` to prevent driver loading issues
+- **Improved OLED flickering fix**
+  - Reset animation frames when OLED turns off to prevent flicker on wake
+  - Reset animation frames when OLED wakes up from activity
+- **Added WPM-based progressive animation speed**
+  - 0-5 WPM: Idle sitting animation
+  - 10-30 WPM: Slow typing animation (300ms/frame)
+  - 31-50 WPM: Medium speed (200ms/frame)
+  - 51-70 WPM: Fast (120ms/frame)
+  - 71-90 WPM: Very fast (80ms/frame)
+  - 91-110 WPM: Super fast (50ms/frame)
+  - 110+ WPM: Maximum speed (30ms/frame)
+- Adjusted animation thresholds for smoother transitions
+- Firmware size: 27,842/28,672 bytes (97%, 830 bytes free)
+
 ### November 30, 2025
 - Fixed bongocat flickering issue after idle timeout
 - Added timer reset when OLED wakes from sleep to prevent rapid frame cycling
@@ -132,6 +151,6 @@ Reserved for future use (accessed by holding LOWER + RAISE)
 
 ---
 
-Last Updated: November 30, 2025
+Last Updated: December 1, 2025
 QMK Version: 0.30.13
 

@@ -3,9 +3,9 @@
 
 // OLED setup
 #define IDLE_FRAMES 5
-#define IDLE_SPEED 30
+#define IDLE_SPEED 5     // Below this = sitting idle (very low threshold)
 #define TAP_FRAMES 2
-#define TAP_SPEED 40
+#define TAP_SPEED 10     // Above this = bongo typing (start typing animation early)
 #define ANIM_FRAME_DURATION 200
 #define ANIM_SIZE 512
 
@@ -267,16 +267,36 @@ static void render_anim(void) {
 
     static bool was_oled_off = false;
     
+    // Calculate dynamic frame duration based on WPM
+    uint32_t frame_duration;
+    uint16_t current_wpm = get_current_wpm();
+    
+    if (current_wpm <= 30) {
+        frame_duration = 300;   // Slow typing
+    } else if (current_wpm <= 50) {
+        frame_duration = 200;   // Medium typing
+    } else if (current_wpm <= 70) {
+        frame_duration = 120;   // Getting faster
+    } else if (current_wpm <= 90) {
+        frame_duration = 80;    // Fast!
+    } else if (current_wpm <= 110) {
+        frame_duration = 50;    // Very fast!
+    } else {
+        frame_duration = 30;    // INSANE SPEED!
+    }
+    
     if (get_current_wpm() != 000) {
         // Check if OLED was off and is now turning on
         if (was_oled_off) {
             anim_timer = timer_read32();
+            current_idle_frame = 0;
+            current_tap_frame = 0;
             was_oled_off = false;
         }
         
         oled_on();
 
-        if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+        if (timer_elapsed32(anim_timer) > frame_duration) {
             anim_timer = timer_read32();
             animation_phase();
         }
@@ -286,8 +306,10 @@ static void render_anim(void) {
         if (timer_elapsed32(anim_sleep) > oled_timeout) {
             oled_off();
             was_oled_off = true;
+            current_idle_frame = 0;
+            current_tap_frame = 0;
         } else {
-            if (timer_elapsed32(anim_timer) > ANIM_FRAME_DURATION) {
+            if (timer_elapsed32(anim_timer) > frame_duration) {
                 anim_timer = timer_read32();
                 animation_phase();
             }
