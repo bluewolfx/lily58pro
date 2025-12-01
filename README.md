@@ -104,7 +104,7 @@ Reserved for future use (accessed by holding LOWER + RAISE)
 - `EXTRAKEY_ENABLE = yes`
 
 ### Firmware Size
-27,702 / 28,672 bytes (96%) - 970 bytes free
+27,842/28,672 bytes (97%, 830 bytes free)
 
 ## Configuration Details
 
