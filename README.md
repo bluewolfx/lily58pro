@@ -1,156 +1,156 @@
-# Lily58 Pro - Custom QMK Firmware
+# Lily58 Pro Keyboard Configurations
 
-Custom QMK firmware for Lily58 Pro with bongocat OLED animation, VIA support, and rotary encoder.
+My QMK firmware configurations for the Lily58 Pro split keyboard.
 
-## Features
+## Current Configuration: Ocean Dream + Luna
 
-- Animated Bongocat on right OLED (reacts to typing speed)
-- WPM Counter + Layer indicator on left OLED
-- Rotary Encoder support (volume control)
-- Mouse Keys enabled (ready for Ploopy trackball)
-- VIA Support for keymap customization
-- LTO Optimization - firmware fits in 96% (970 bytes free)
-- 4 Layers: QWERTY, LOWER, RAISE, ADJUST
+**Firmware Size:** 26,568/28,672 bytes (92%, 2,104 bytes free)  
+**Last Updated:** 2025-12-06
 
-## OLED Displays
+### Features
 
-### Left OLED (Master)
-- Current WPM (Words Per Minute)
-- Active layer name
-- Caps Lock indicator
-- GUI status
+#### Left OLED (Vertical, Master Side)
+- **Layer Status**: Shows current layer (0-3)
+- **NKRO Status**: Displays NKRO on/off state
+- **WPM Counter**: Real-time words per minute
+- **Luna Cat Animation**: 
+  - Sits when idle
+  - Walks at 10+ WPM
+  - Runs at 40+ WPM
+  - **Jumps** when pressing Space
+  - **Sneaks** when holding Ctrl
+  - **Barks** when Caps Lock is on
 
-### Right OLED (Slave)
-- Animated bongocat
-- Idle animation when not typing
-- Bongo animation when typing (speed increases with WPM)
-- Auto-sleep after 10 minutes of inactivity
+#### Right OLED (Vertical, Slave Side)
+- **Ocean Dream Animation**: Animated ocean scene
+  - Twinkling stars
+  - Shooting stars (increases with WPM)
+  - Animated waves (rougher with higher WPM)
+  - Island with palm tree
+  - **Moon with phases** (enabled after removing unused code)
+  - Responds to typing speed
 
-## Keymap Layers
+#### Keyboard Features
+- **Mouse Keys**: Layer 1 (mouse buttons), Layer 3 (mouse movement + wheel)
+- **OLED Toggle: Hold LOWER+RAISE, press B key (left side bottom row)
+- **NKRO Toggle**: Hold LOWER+RAISE, press right encoder
+- **Rotary Encoder**: Volume control (right side)
+- **Arrow Keys**: Layer 2, positioned under 6/7/8/9 (LEFT/DOWN/UP/RIGHT)
+- **VIA Support**: Enabled for real-time keymap editing
 
-See [lily58.layout.json](via/lily58.layout.json) for full VIA configuration.
+### Keymap Layers
 
-### Layer 0: QWERTY (Base)
+- **Layer 0 (Base)**: QWERTY layout
+- **Layer 1 (Lower)**: Function keys, symbols, mouse buttons
+- **Layer 2 (Raise)**: Numbers, F-keys, arrow keys
+- **Layer 3 (Adjust): Mouse movement, wheel scroll, OLED toggle, NKRO toggle
+
+## Directory Structure
+
 ```
-,-----------------------------------------.                    ,-----------------------------------------.
-| ESC  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-| Tab  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  |  -   |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-|LCTRL |   A  |   S  |   D  |   F  |   G  |-------.    ,-------|   H  |   J  |   K  |   L  |   ;  |  '   |
-|------+------+------+------+------+------|  CAPS |    |  PLAY |------+------+------+------+------+------|
-|LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
-`-----------------------------------------/       /     \      \-----------------------------------------'
-                  | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
-                  |      |      |      |/       /         \      \ |      |      |      |
-                  `----------------------------'           '------''--------------------'
+lily58pro/
+├── README.md                                    # This file
+├── ocean_dream/lily58_rev1_ocean_dream.hex  # Compiled firmware
+├── ocean_dream/                                 # Current active config
+│   ├── config.h                                 # Hardware settings
+│   ├── keymap.c                                 # Key mappings
+│   ├── rules.mk                                 # Build configuration
+│   └── lib/
+│       ├── lily58_oled.c/h                      # Custom OLED handler
+│       ├── luna.c/h                             # Luna cat animation
+│       └── ocean_dream.c/h                      # Ocean Dream animation
+└── bongocat/                                    # Previous config (backup)
+    ├── config.h
+    ├── keymap.c
+    ├── rules.mk
+    ├── lily58.layout.json                       # VIA layout
+    └── lib/
+        └── bongocat.c/h                         # Old BongoCat animation
 ```
-Encoder keys: Caps Lock (left), Play/Pause (right)
 
-### Layer 1: LOWER
+## Flashing Firmware
+
+### Using QMK MSYS (Windows)
+
+```bash
+cd ~/qmk_firmware
+qmk compile -kb lily58/rev1 -km my_config_with_bongoCat
+qmk flash -kb lily58/rev1 -km my_config_with_bongoCat
 ```
-,-----------------------------------------.                    ,-----------------------------------------.
-|      |      |      |      |      |      |                    |      |      |      |      |      |      |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  | F10  | F11  | F12  |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-|   `  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   ~  |
-|------+------+------+------+------+------|  PREV |    |  NEXT |------+------+------+------+------+------|
-|      |      |      |      |      |  DEL |-------|    |-------|      |   _  |   +  |   {  |   }  |   |  |
-`-----------------------------------------/       /     \      \-----------------------------------------'
-                  | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
-                  |      |      |      |/       /         \      \ |      |      |      |
-                  `----------------------------'           '------''--------------------'
+
+Then press the reset button on your keyboard.
+
+### Pre-compiled Firmware
+
+Flash `ocean_dream/lily58_rev1_ocean_dream.hex` using QMK Toolbox or:
+```bash
+qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 ```
-Encoder keys: Previous Track (left), Next Track (right)
-
-### Layer 2: RAISE
-```
-,-----------------------------------------.                    ,-----------------------------------------.
-|      |      |      |      |      |      |                    |      |      |      |      |      |      |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-|   `  |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
-|------+------+------+------+------+------|                    |------+------+------+------+------+------|
-|  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |-------.    ,-------|      | Left | Down |  Up  |Right |      |
-|------+------+------+------+------+------|  MSTP |    |  MUTE |------+------+------+------+------+------|
-|  F7  |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
-`-----------------------------------------/       /     \      \-----------------------------------------'
-                  | LAlt | LGUI |LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
-                  |      |      |      |/       /         \      \ |      |      |      |
-                  `----------------------------'           '------''--------------------'
-```
-Encoder keys: Media Stop (left), Mute (right)
-
-### Layer 3: ADJUST
-Reserved for future use (accessed by holding LOWER + RAISE)
-
-## Hardware Configuration
-
-- **MCU:** ATmega32U4
-- **Bootloader:** Caterina
-- **Encoder:** Single rotary encoder on right half (F4/D4 pins)
-- **OLED:** 128x32 SSD1306 displays on both halves
-- **Split:** TRRS cable connection
-
-## Build Configuration
-
-### Enabled Features
-- `LTO_ENABLE = yes`
-- `VIA_ENABLE = yes`
-- `OLED_ENABLE = yes`
-- `WPM_ENABLE = yes`
-- `ENCODER_ENABLE = yes`
-- `MOUSEKEY_ENABLE = yes`
-- `EXTRAKEY_ENABLE = yes`
-
-### Firmware Size
-27,842/28,672 bytes (97%, 830 bytes free)
 
 ## Configuration Details
 
-- OLED timeout: 10 minutes
-- Master hand: LEFT
-- Encoder: Volume up/down on right half
-- WPM tracking updates bongocat animation speed
+### OLED Settings
+- **Timeout**: Disabled (manual toggle via OLED_TOG key)
+- **Rotation**: 270° (vertical orientation on both sides)
+- **Split OLED**: Enabled for independent left/right displays
+- **Manual Control**: Use LOWER+RAISE+B to toggle screens on/off
+
+### Build Options
+- **LTO**: Enabled (reduces firmware size)
+- **NKRO**: Enabled (N-Key Rollover for gaming/fast typing)
+- **Mouse Keys**: Enabled
+- **Encoders**: Enabled (right side only)
+- **WPM Tracking**: Enabled with split support
+- **VIA**: Enabled for GUI keymap editing
+
+### Disabled Features (to save space)
+- Bootmagic: Disabled
+- RGB/LED: Disabled (no RGB hardware)
+- Audio: Disabled
+- Console/Command: Disabled
+
+
+## Special Key Combinations
+
+- **OLED Toggle**: LOWER + RAISE + B (6th key left side bottom row) - Manually turn screens on/off
+- **NKRO Toggle**: LOWER + RAISE + Right Encoder - Toggle N-Key Rollover
+- **Adjust Layer**: Hold LOWER + RAISE simultaneously
+- **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
+- **Luna Jump**: Press Space
+- **Luna Sneak**: Hold Ctrl
+
+## Configuration Details
+
+### OLED Settings
+- **Timeout**: Disabled (manual toggle via OLED_TOG key)
+- **Rotation**: 270° (vertical orientation on both sides)
+- **Split OLED**: Enabled for independent left/right displays
+- **Manual Control**: Use LOWER+RAISE+B to toggle screens on/off
+- **Adjust Layer**: Hold LOWER + RAISE simultaneously
+- **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
+- **Luna Jump**: Press Space
+- **Luna Sneak**: Hold Ctrl
 
 ## Credits
 
-- Bongocat Animation: [xxqxpxx/lily58_bongocat_mac](https://github.com/xxqxpxx/lily58_bongocat_mac)
-- QMK Firmware: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
-- Lily58: [kata0510/Lily58](https://github.com/kata0510/Lily58)
+- **Ocean Dream Animation**: [@snowe2010](https://github.com/snowe2010/qmk_firmware)
+- **Luna Cat Animation**: QMK Community
+- **QMK Firmware**: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
 
 ## Changelog
 
-### December 1, 2025
-- **Fixed USB initialization issues on Windows boot**
-  - Added `SPLIT_USB_TIMEOUT 2500` for better split keyboard detection
-  - Added `SPLIT_USB_TIMEOUT_POLL 10` for faster polling
-  - Added `USB_SUSPEND_WAKEUP_DELAY 200` to prevent driver loading issues
-- **Improved OLED flickering fix**
-  - Reset animation frames when OLED turns off to prevent flicker on wake
-  - Reset animation frames when OLED wakes up from activity
-- **Added WPM-based progressive animation speed**
-  - 0-5 WPM: Idle sitting animation
-  - 10-30 WPM: Slow typing animation (300ms/frame)
-  - 31-50 WPM: Medium speed (200ms/frame)
-  - 51-70 WPM: Fast (120ms/frame)
-  - 71-90 WPM: Very fast (80ms/frame)
-  - 91-110 WPM: Super fast (50ms/frame)
-  - 110+ WPM: Maximum speed (30ms/frame)
-- Adjusted animation thresholds for smoother transitions
-- Firmware size: 27,842/28,672 bytes (97%, 830 bytes free)
-
-### November 30, 2025
-- Fixed bongocat flickering issue after idle timeout
-- Added timer reset when OLED wakes from sleep to prevent rapid frame cycling
-- Updated keymap to match VIA layout configuration
-  - Base layer: Added Caps Lock and Play/Pause encoder keys
-  - LOWER layer: Added Delete key, Previous/Next track encoder keys
-  - RAISE layer: Added Media Stop and Mute encoder keys
-- Updated layer 3 documentation to reflect disabled state (no RGB hardware)
-
----
-
-Last Updated: December 1, 2025
-QMK Version: 0.30.13
-
+### 2025-12-06 - Ocean Dream + Luna Implementation
+- Replaced BongoCat with Ocean Dream (right OLED)
+- Added Luna cat animation (left OLED)
+- Reorganized OLED layout: Layer/NKRO/WPM/Luna
+- Added mouse keys to Layer 1 and Layer 3
+- Repositioned arrow keys to match VIA layout
+- Added NKRO toggle key
+- Fixed OLED timeout flickering issues
+- Added Luna jump (Space) and sneak (Ctrl) triggers
+- Optimized firmware size: 26,568 bytes (2,104 bytes free)
+- Removed unused keylog code (saved ~1,266 bytes)
+- Enabled moon animation (uses 182 bytes)
+- Added manual OLED toggle key (LOWER+RAISE+B)
+- Disabled automatic OLED timeout to prevent flickering
+- Final firmware: 26,568 bytes (2,104 bytes free)
