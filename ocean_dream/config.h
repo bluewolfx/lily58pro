@@ -30,7 +30,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_OLED_ENABLE
 #define OLED_TIMEOUT 30000
 #define USB_SUSPEND_WAKEUP_DELAY 200
-#define OS_DETECTION_DEBOUNCE 250
 
 #define ENCODER_A_PINS { }
 #define ENCODER_B_PINS { }

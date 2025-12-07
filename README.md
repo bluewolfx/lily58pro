@@ -120,12 +120,6 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 - **NKRO Toggle**: LOWER + RAISE + Right Encoder
 - **Adjust Layer**: Hold LOWER + RAISE simultaneously
 - **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
-- **Luna Jump**: Press Space
-- **Luna Sneak**: Hold Ctrl
-
-## Credits
-
-- **Ocean Dream Animation**: [@snowe2010](https://github.com/snowe2010/qmk_firmware)
 - **Luna Cat Animation**: QMK Community
 - **QMK Firmware**: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
 
