@@ -21,9 +21,7 @@ enum layer_number {
   _ADJUST,
 };
 
-enum custom_keycodes {
-  OLED_TOG = SAFE_RANGE,
-};
+// No custom keycodes needed
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -102,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |                    |      |      |      |  MUp |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------.    ,-------|      |      |MRight|MDown |MLeft |      |
- * |------+------+------+------+------+------|OLEDTG|    |NKROTG|------+------+------+------+------+------|
+ * |------+------+------+------+------+------|NKROTG |    |       |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   |      |      |      | /MWhlUp /       \MWhlDn\  |      |      |      |
@@ -113,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, MS_UP, XXXXXXX, XXXXXXX,
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, MS_RGHT, MS_DOWN, MS_LEFT, XXXXXXX,
-  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, OLED_TOG, XXXXXXX, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, NK_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                              _______, _______, _______, MS_WHLU, MS_WHLD,  _______, _______, _______
   )
 };
@@ -143,11 +141,6 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case OLED_TOG:
-            if (record->event.pressed) {
-                is_oled_on() ? oled_off() : oled_on();
-            }
-            return false;
         case KC_LCTL:
         case KC_RCTL:
 #ifdef OCEAN_DREAM_ENABLE

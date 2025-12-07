@@ -5,11 +5,12 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
 ## Current Configuration: Ocean Dream + Luna
 
 **Firmware Size:** 26,568/28,672 bytes (92%, 2,104 bytes free)  
-**Last Updated:** 2025-12-06
+**Last Updated:** 2025-12-07
 
 ### Features
 
 #### Left OLED (Vertical, Master Side)
+- **OS Detection**: Automatically detects and displays connected OS (Windows/Mac/Linux icon)
 - **Layer Status**: Shows current layer (0-3)
 - **NKRO Status**: Displays NKRO on/off state
 - **WPM Counter**: Real-time words per minute
@@ -17,9 +18,10 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
   - Sits when idle
   - Walks at 10+ WPM
   - Runs at 40+ WPM
-  - **Jumps** when pressing Space
-  - **Sneaks** when holding Ctrl
-  - **Barks** when Caps Lock is on
+  - Jumps when pressing Space
+  - Sneaks when holding Ctrl
+  - Barks when Caps Lock is on
+  - Stops animating 30s before timeout
 
 #### Right OLED (Vertical, Slave Side)
 - **Ocean Dream Animation**: Animated ocean scene
@@ -27,16 +29,17 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
   - Shooting stars (increases with WPM)
   - Animated waves (rougher with higher WPM)
   - Island with palm tree
-  - **Moon with phases** (enabled after removing unused code)
+  - Moon with phases
   - Responds to typing speed
+  - Stops animating 30s before timeout
 
 #### Keyboard Features
 - **Mouse Keys**: Layer 1 (mouse buttons), Layer 3 (mouse movement + wheel)
-- **OLED Toggle: Hold LOWER+RAISE, press B key (left side bottom row)
 - **NKRO Toggle**: Hold LOWER+RAISE, press right encoder
 - **Rotary Encoder**: Volume control (right side)
 - **Arrow Keys**: Layer 2, positioned under 6/7/8/9 (LEFT/DOWN/UP/RIGHT)
 - **VIA Support**: Enabled for real-time keymap editing
+- **Auto OLED Timeout**: 30 seconds with fade out effect
 
 ### Keymap Layers
 
@@ -102,6 +105,8 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 - **Encoders**: Enabled (right side only)
 - **WPM Tracking**: Enabled with split support
 - **VIA**: Enabled for GUI keymap editing
+- **OS Detection**: Enabled (Windows/Mac/Linux/iOS)
+- **OLED Fade Out**: Enabled with 5-step interval
 
 ### Disabled Features (to save space)
 - Bootmagic: Disabled
@@ -112,20 +117,7 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 
 ## Special Key Combinations
 
-- **OLED Toggle**: LOWER + RAISE + B (6th key left side bottom row) - Manually turn screens on/off
-- **NKRO Toggle**: LOWER + RAISE + Right Encoder - Toggle N-Key Rollover
-- **Adjust Layer**: Hold LOWER + RAISE simultaneously
-- **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
-- **Luna Jump**: Press Space
-- **Luna Sneak**: Hold Ctrl
-
-## Configuration Details
-
-### OLED Settings
-- **Timeout**: Disabled (manual toggle via OLED_TOG key)
-- **Rotation**: 270° (vertical orientation on both sides)
-- **Split OLED**: Enabled for independent left/right displays
-- **Manual Control**: Use LOWER+RAISE+B to toggle screens on/off
+- **NKRO Toggle**: LOWER + RAISE + Right Encoder
 - **Adjust Layer**: Hold LOWER + RAISE simultaneously
 - **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
 - **Luna Jump**: Press Space
@@ -139,6 +131,15 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 
 ## Changelog
 
+### 2025-12-07 - OS Detection and OLED Timeout Fix
+- Added OS detection with icon display (Windows/Mac/Linux/iOS)
+- Fixed OLED timeout flickering issue with guard clause
+- Implemented automatic OLED timeout (30s) with fade out effect
+- Animation stops 30s before timeout to allow proper screen shutdown
+- Removed manual OLED toggle (now fully automatic)
+- Fixed ADJUST layer keymap comment formatting
+- Optimized OLED display layout (OS icon + Layer + NKRO + WPM)
+
 ### 2025-12-06 - Ocean Dream + Luna Implementation
 - Replaced BongoCat with Ocean Dream (right OLED)
 - Added Luna cat animation (left OLED)
@@ -151,6 +152,3 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 - Optimized firmware size: 26,568 bytes (2,104 bytes free)
 - Removed unused keylog code (saved ~1,266 bytes)
 - Enabled moon animation (uses 182 bytes)
-- Added manual OLED toggle key (LOWER+RAISE+B)
-- Disabled automatic OLED timeout to prevent flickering
-- Final firmware: 26,568 bytes (2,104 bytes free)
