@@ -5,7 +5,7 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
 ## Current Configuration: Ocean Dream + Luna
 
 **Firmware Size:** 26,568/28,672 bytes (92%, 2,104 bytes free)  
-**Last Updated:** 2025-12-07
+**Last Updated:** 2026-01-05
 
 ### Features
 
@@ -34,19 +34,19 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
   - Stops animating 30s before timeout
 
 #### Keyboard Features
-- **Mouse Keys**: Layer 1 (mouse buttons), Layer 3 (mouse movement + wheel)
-- **NKRO Toggle**: Hold LOWER+RAISE, press right encoder
+- **Mouse Keys**: Layer 1 (mouse buttons BTN1-5), Layer 3 (mouse cursor + wheel scroll)
+- **NKRO Toggle**: Hold LOWER+RAISE, toggle via Adjust layer encoder key
 - **Rotary Encoder**: Volume control (right side)
-- **Arrow Keys**: Layer 2, positioned under 6/7/8/9 (LEFT/DOWN/UP/RIGHT)
+- **Arrow Keys**: Layer 2, positioned under I/J/K/L (LEFT/DOWN/UP/RIGHT)
 - **VIA Support**: Enabled for real-time keymap editing
 - **Auto OLED Timeout**: 30 seconds with fade out effect
 
 ### Keymap Layers
 
 - **Layer 0 (Base)**: QWERTY layout
-- **Layer 1 (Lower)**: Function keys, symbols, mouse buttons
-- **Layer 2 (Raise)**: Numbers, F-keys, arrow keys
-- **Layer 3 (Adjust): Mouse movement, wheel scroll, OLED toggle, NKRO toggle
+- **Layer 1 (Lower)**: Function keys, symbols, mouse buttons, media controls
+- **Layer 2 (Raise)**: Numbers, F-keys, arrow keys, brackets, operators
+- **Layer 3 (Adjust)**: Mouse cursor movement, wheel scroll, NKRO toggle
 
 ## Directory Structure
 
@@ -124,6 +124,15 @@ qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
 - **QMK Firmware**: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
 
 ## Changelog
+
+### 2026-01-05 - Keymap Layout Update
+- Updated keycode syntax for QMK compatibility
+- Changed mouse button keycodes from KC_BTN to MS_BTN format
+- Changed mouse cursor keycodes from KC_MS to MS format
+- Changed mouse wheel keycodes from KC_WH to MS_WHL format
+- Adjusted LOWER layer symbol positions to match VIA config
+- Repositioned arrow keys in RAISE layer
+- Fixed mouse cursor layout in ADJUST layer for better ergonomics
 
 ### 2025-12-07 - OS Detection and OLED Timeout Fix
 - Added OS detection with icon display (Windows/Mac/Linux/iOS)
