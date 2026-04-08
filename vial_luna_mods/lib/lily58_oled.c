@@ -6,7 +6,6 @@
 
 #ifdef LUNA_ENABLE
 #    include "luna.h"
-led_t led_usb_state;
 #endif
 
 #ifdef OCEAN_DREAM_ENABLE
