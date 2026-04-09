@@ -2,43 +2,34 @@
 
 My QMK firmware configurations for the Lily58 Pro split keyboard.
 
-## Current Configuration: Ocean Dream + Luna
+## Current Configuration: Vial + Luna + Mod Indicators
 
-**Firmware Size:** 26,568/28,672 bytes (92%, 2,104 bytes free)  
-**Last Updated:** 2026-01-05
 
 ### Features
 
 #### Left OLED (Vertical, Master Side)
-- **OS Detection**: Automatically detects and displays connected OS (Windows/Mac/Linux icon)
-- **Layer Status**: Shows current layer (0-3)
-- **NKRO Status**: Displays NKRO on/off state
+- **Layer Status**: Shows current layer number (0-3)
 - **WPM Counter**: Real-time words per minute
-- **Luna Cat Animation**: 
+- **Luna Cat Animation**:
   - Sits when idle
   - Walks at 10+ WPM
   - Runs at 40+ WPM
   - Jumps when pressing Space
   - Sneaks when holding Ctrl
-  - Barks when Caps Lock is on
-  - Stops animating 30s before timeout
+  - Stops animating after OLED timeout
 
 #### Right OLED (Vertical, Slave Side)
-- **Ocean Dream Animation**: Animated ocean scene
-  - Twinkling stars
-  - Shooting stars (increases with WPM)
-  - Animated waves (rougher with higher WPM)
-  - Island with palm tree
-  - Moon with phases
-  - Responds to typing speed
-  - Stops animating 30s before timeout
+- **Keyboard Name**: "lily58" header
+- **Layer Name**: Active layer displayed (QWRT / LOWR / RISE / ADJS)
+- **Modifier Indicators**: Highlights active modifiers — SFT, CTL, ALT, GUI
+- **Caps Lock Indicator**: Shows `CAP!` when Caps Lock is on, blank when off
 
 #### Keyboard Features
 - **Mouse Keys**: Layer 1 (mouse buttons BTN1-5), Layer 3 (mouse cursor + wheel scroll)
-- **NKRO Toggle**: Hold LOWER+RAISE, toggle via Adjust layer encoder key
-- **Rotary Encoder**: Volume control (right side)
-- **Arrow Keys**: Layer 2, positioned under I/J/K/L (LEFT/DOWN/UP/RIGHT)
-- **VIA Support**: Enabled for real-time keymap editing
+- **Rotary Encoder**: Volume control (right side only)
+- **Arrow Keys**: Layer 2, positioned under H/J/K/L (LEFT/DOWN/UP/RIGHT)
+- **Vial Support**: Full dynamic keymap editing via [vial.rocks](https://vial.rocks) or Vial desktop app
+- **EEPROM Reset**: LOWER+RAISE+left encoder click clears saved Vial layout
 - **Auto OLED Timeout**: 30 seconds with fade out effect
 
 ### Keymap Layers
@@ -46,112 +37,89 @@ My QMK firmware configurations for the Lily58 Pro split keyboard.
 - **Layer 0 (Base)**: QWERTY layout
 - **Layer 1 (Lower)**: Function keys, symbols, mouse buttons, media controls
 - **Layer 2 (Raise)**: Numbers, F-keys, arrow keys, brackets, operators
-- **Layer 3 (Adjust)**: Mouse cursor movement, wheel scroll, NKRO toggle
+- **Layer 3 (Adjust)**: Mouse cursor movement, wheel scroll, EEPROM reset
 
 ## Directory Structure
 
 ```
 lily58pro/
 ├── README.md                                    # This file
-├── ocean_dream/lily58_rev1_ocean_dream.hex  # Compiled firmware
-├── ocean_dream/                                 # Current active config
-│   ├── config.h                                 # Hardware settings
+├── vial_luna_mods/                              # Current active config (Vial + Luna + Mod indicators)
+│   ├── config.h                                 # Hardware settings, Vial UID, tapping term
 │   ├── keymap.c                                 # Key mappings
 │   ├── rules.mk                                 # Build configuration
+│   ├── vial.json                                # Vial keyboard layout definition
 │   └── lib/
-│       ├── lily58_oled.c/h                      # Custom OLED handler
-│       ├── luna.c/h                             # Luna cat animation
+│       ├── lily58_oled.c                        # Custom OLED handler
+│       └── luna.c/h                             # Luna cat animation
+├── ocean_dream/                                 # Previous config (no Vial, has Ocean Dream animation)
+│   ├── config.h
+│   ├── keymap.c
+│   ├── rules.mk
+│   ├── lily58_rev1_ocean_dream.hex              # Pre-compiled firmware
+│   └── lib/
+│       ├── lily58_oled.c/h
+│       ├── luna.c/h
 │       └── ocean_dream.c/h                      # Ocean Dream animation
-└── bongocat/                                    # Previous config (backup)
+└── bongocat/                                    # Oldest config (backup)
     ├── config.h
     ├── keymap.c
     ├── rules.mk
     ├── lily58.layout.json                       # VIA layout
     └── lib/
-        └── bongocat.c/h                         # Old BongoCat animation
+        └── bongocat.c/h
 ```
 
 ## Flashing Firmware
 
-### Using QMK MSYS (Windows)
+### Primary Workflow — Windows QMK MSYS + vial-qmk
 
-```bash
-cd ~/qmk_firmware
-qmk compile -kb lily58/rev1 -km my_config_with_bongoCat
-qmk flash -kb lily58/rev1 -km my_config_with_bongoCat
+The main build environment is **QMK MSYS on Windows** with `vial-qmk` at `C:\Users\ricar\vial-qmk`.  
+The `lily58pro/` directory in WSL is a backup of the source files.
+
+Keymap files live at:
+```
+C:\Users\ricar\vial-qmk\keyboards\lily58\keymaps\vial_luna_mods\
 ```
 
-Then press the reset button on your keyboard.
-
-### Pre-compiled Firmware
-
-Flash `ocean_dream/lily58_rev1_ocean_dream.hex` using QMK Toolbox or:
+To compile and flash from QMK MSYS:
 ```bash
-qmk flash ocean_dream/lily58_rev1_ocean_dream.hex
+qmk flash -kb lily58/rev1 -km vial_luna_mods
+```
+
+Then press the reset button on the keyboard when prompted.
+
+### Syncing from WSL to Windows
+
+```bash
+cp -r ~/lily58pro/vial_luna_mods /mnt/c/Users/ricar/vial-qmk/keyboards/lily58/keymaps/
 ```
 
 ## Configuration Details
 
 ### OLED Settings
-- **Timeout**: Disabled (manual toggle via OLED_TOG key)
+- **Timeout**: 30 seconds with automatic fade out
 - **Rotation**: 270° (vertical orientation on both sides)
 - **Split OLED**: Enabled for independent left/right displays
-- **Manual Control**: Use LOWER+RAISE+B to toggle screens on/off
 
-### Build Options
+### Build Options (`vial_luna_mods`)
 - **LTO**: Enabled (reduces firmware size)
-- **NKRO**: Enabled (N-Key Rollover for gaming/fast typing)
+- **NKRO**: Disabled
 - **Mouse Keys**: Enabled
 - **Encoders**: Enabled (right side only)
 - **WPM Tracking**: Enabled with split support
-- **VIA**: Enabled for GUI keymap editing
-- **OS Detection**: Enabled (Windows/Mac/Linux/iOS)
+- **Vial**: Enabled for dynamic keymap editing
+- **Luna Animation**: Enabled
+- **Ocean Dream**: Removed (dead code cleanup)
 - **OLED Fade Out**: Enabled with 5-step interval
+- **Tap Dance**: Enabled
+- **Bootmagic**: Disabled
+- **RGB/LED**: Disabled (no RGB hardware)
+- **Audio**: Disabled
+- **Console/Command**: Disabled
 
-### Disabled Features (to save space)
-- Bootmagic: Disabled
-- RGB/LED: Disabled (no RGB hardware)
-- Audio: Disabled
-- Console/Command: Disabled
+### Special Key Combinations
 
-
-## Special Key Combinations
-
-- **NKRO Toggle**: LOWER + RAISE + Right Encoder
 - **Adjust Layer**: Hold LOWER + RAISE simultaneously
-- **Ocean Dream Calm Mode**: Hold Ctrl (makes waves calm)
-- **Luna Cat Animation**: QMK Community
-- **QMK Firmware**: [qmk/qmk_firmware](https://github.com/qmk/qmk_firmware)
-
-## Changelog
-
-### 2026-01-05 - Keymap Layout Update
-- Updated keycode syntax for QMK compatibility
-- Changed mouse button keycodes from KC_BTN to MS_BTN format
-- Changed mouse cursor keycodes from KC_MS to MS format
-- Changed mouse wheel keycodes from KC_WH to MS_WHL format
-- Adjusted LOWER layer symbol positions to match VIA config
-- Repositioned arrow keys in RAISE layer
-- Fixed mouse cursor layout in ADJUST layer for better ergonomics
-
-### 2025-12-07 - OS Detection and OLED Timeout Fix
-- Added OS detection with icon display (Windows/Mac/Linux/iOS)
-- Fixed OLED timeout flickering issue with guard clause
-- Implemented automatic OLED timeout (30s) with fade out effect
-- Animation stops 30s before timeout to allow proper screen shutdown
-- Removed manual OLED toggle (now fully automatic)
-- Fixed ADJUST layer keymap comment formatting
-- Optimized OLED display layout (OS icon + Layer + NKRO + WPM)
-
-### 2025-12-06 - Ocean Dream + Luna Implementation
-- Replaced BongoCat with Ocean Dream (right OLED)
-- Added Luna cat animation (left OLED)
-- Reorganized OLED layout: Layer/NKRO/WPM/Luna
-- Added mouse keys to Layer 1 and Layer 3
-- Repositioned arrow keys to match VIA layout
-- Added NKRO toggle key
-- Fixed OLED timeout flickering issues
-- Added Luna jump (Space) and sneak (Ctrl) triggers
-- Optimized firmware size: 26,568 bytes (2,104 bytes free)
-- Removed unused keylog code (saved ~1,266 bytes)
-- Enabled moon animation (uses 182 bytes)
+- **EEPROM Reset**: LOWER + RAISE + left encoder click (clears Vial saved layout)
+- **Mute**: Right encoder click on RAISE layer

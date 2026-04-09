@@ -8,9 +8,6 @@
 #    include "luna.h"
 #endif
 
-#ifdef OCEAN_DREAM_ENABLE
-#    include "ocean_dream.h"
-#endif
 
 bool is_master = false;
 
@@ -72,7 +69,7 @@ void render_right_oled(void) {
     // Caps lock
     oled_write_P(PSTR("\n"), false);
     led_t leds = host_keyboard_led_state();
-    oled_write_P(leds.caps_lock ? PSTR("CAP!") : PSTR("cap "), false);
+    oled_write_P(leds.caps_lock ? PSTR("CAP!") : PSTR("    "), false);
 }
 
 bool oled_task_user(void) {

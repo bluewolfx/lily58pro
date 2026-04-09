@@ -27,19 +27,10 @@ GRAVE_ESC_ENABLE = no
 MAGIC_ENABLE = no
 OLED_FADE_OUT = yes
 OLED_FADE_OUT_INTERVAL = 5
-
-# Ocean Dream Animation
-OCEAN_DREAM_ENABLE = no
-# Luna Cat Animation
 LUNA_ENABLE = yes
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += lib/lily58_oled.c
-
-    ifeq ($(strip $(OCEAN_DREAM_ENABLE)), yes)
-        SRC += lib/ocean_dream.c
-        OPT_DEFS += -DOCEAN_DREAM_ENABLE
-    endif
 
     ifeq ($(strip $(LUNA_ENABLE)), yes)
         SRC += lib/luna.c

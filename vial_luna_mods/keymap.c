@@ -4,13 +4,6 @@
 #include "vial.h"
 #endif
 
-#ifdef OLED_ENABLE
-#include "lib/lily58_oled.h"
-#endif
-
-#ifdef OCEAN_DREAM_ENABLE
-extern bool is_calm;
-#endif
 
 #ifdef LUNA_ENABLE
 extern bool isSneaking;
@@ -147,9 +140,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_LCTL:
         case KC_RCTL:
-#ifdef OCEAN_DREAM_ENABLE
-            is_calm = (record->event.pressed) ? true : false;
-#endif
 #ifdef LUNA_ENABLE
             if (record->event.pressed) {
                 isSneaking = true;
